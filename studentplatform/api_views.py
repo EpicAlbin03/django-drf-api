@@ -5,11 +5,13 @@ from studentplatform.serializers import StudentSerializer
 from .models import Student
 
 
-class StudentListCreateAPIView(generics.ListCreateAPIView):
+class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
     queryset = Student.objects.select_related("course").all()
     serializer_class = StudentSerializer
 
 
-class StudentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class StudentRetrieveUpdateDestroyAPIView(
+    generics.RetrieveUpdateDestroyAPIView[Student]
+):
     queryset = Student.objects.select_related("course").all()
     serializer_class = StudentSerializer
