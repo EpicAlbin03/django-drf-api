@@ -14,22 +14,20 @@ class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
     # filter students by grade or active status
     def get_queryset(self):
         queryset = super().get_queryset()
-        grade = self.request.query_params.get("grade")
-        is_active = self.request.query_params.get("is_active")
+        grade = self.request.query_params.get('grade')
+        is_active = self.request.query_params.get('is_active')
 
         if grade is not None:
             queryset = queryset.filter(grade=grade)
         if is_active is not None:
             # bools require .lower() to work with query params
-            queryset = queryset.filter(is_active=is_active.lower() == "true")
+            queryset = queryset.filter(is_active=is_active.lower() == 'true')
 
         return queryset
 
 
 # GET, PUT, PATCH, DELETE /students/<int:pk>/
-class StudentRetrieveUpdateDestroyAPIView(
-    generics.RetrieveUpdateDestroyAPIView[Student]
-):
+class StudentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView[Student]):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
@@ -51,5 +49,5 @@ class CourseStudentListAPIView(generics.ListAPIView[Student]):
     serializer_class = StudentSerializer
 
     def get_queryset(self):
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs['pk'])
         return course.students.all()

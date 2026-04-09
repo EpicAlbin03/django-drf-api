@@ -11,23 +11,23 @@ from .api_views import (
 # pk = primary key
 urlpatterns = [
     path(
-        "students/",
+        'students/',
         StudentListCreateAPIView.as_view(),
     ),
     path(
-        "students/<int:pk>/",
+        'students/<int:pk>/',
         StudentRetrieveUpdateDestroyAPIView.as_view(),
     ),
     path(
-        "courses/",
+        'courses/',
         CourseListCreateAPIView.as_view(),
     ),
     path(
-        "courses/<int:pk>/",
+        'courses/<int:pk>/',
         CourseRetrieveUpdateDestroyAPIView.as_view(),
     ),
     path(
-        "courses/<int:pk>/students/",
+        'courses/<int:pk>/students/',
         CourseStudentListAPIView.as_view(),
     ),
 ]
