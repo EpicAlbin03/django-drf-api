@@ -3,6 +3,7 @@ from django.urls import path
 from .api_views import (
     CourseListCreateAPIView,
     CourseRetrieveUpdateDestroyAPIView,
+    CourseStudentListAPIView,
     StudentListCreateAPIView,
     StudentRetrieveUpdateDestroyAPIView,
 )
@@ -24,5 +25,9 @@ urlpatterns = [
     path(
         "courses/<int:pk>/",
         CourseRetrieveUpdateDestroyAPIView.as_view(),
+    ),
+    path(
+        "courses/<int:pk>/students/",
+        CourseStudentListAPIView.as_view(),
     ),
 ]
