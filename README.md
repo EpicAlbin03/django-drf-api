@@ -98,7 +98,7 @@ Once everything is wired up:
 
 - [x] **Nested endpoint** — add `/api/courses/<pk>/students/` using `ListAPIView` with a filtered queryset
 - [x] **Filtering** — filter students by grade or active status via query parameters
-- [ ] **Search** — search students by name or email
+- [x] **Search** — search students by name or email
 - [ ] **Pagination** — configure DRF to paginate list responses
 
 ---
