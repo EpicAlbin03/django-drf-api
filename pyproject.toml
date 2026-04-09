@@ -16,6 +16,29 @@ dependencies = [
 package = false
 
 [tool.mypy]
+# Mypy configuration:
+# https://mypy.readthedocs.io/en/latest/config_file.html
+enable_error_code = [
+  "truthy-bool",
+  "truthy-iterable",
+  "redundant-expr",
+  "unused-awaitable",
+  "ignore-without-code",
+  "possibly-undefined",
+  "redundant-self",
+  "explicit-override",
+  "unimported-reveal",
+  "deprecated",
+  "exhaustive-match",
+]
+
+explicit_package_bases = true
+ignore_missing_imports = true
+local_partial_types = true
+strict = true
+strict_bytes = true
+warn_unreachable = true
+
 plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
 
 [[tool.mypy.overrides]]
