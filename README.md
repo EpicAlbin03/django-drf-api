@@ -8,10 +8,10 @@ Add a **REST API** to your student platform using Django REST Framework. Your ap
 
 ## What Changes From Yesterday
 
-| Yesterday (Phase 2) | Today (Phase 3) |
-|---|---|
-| Data only accessible via HTML pages | Data also accessible via JSON API |
-| No API endpoints | Full CRUD API for students and courses |
+| Yesterday (Phase 2)                 | Today (Phase 3)                        |
+| ----------------------------------- | -------------------------------------- |
+| Data only accessible via HTML pages | Data also accessible via JSON API      |
+| No API endpoints                    | Full CRUD API for students and courses |
 
 ---
 
@@ -22,6 +22,7 @@ pip install djangorestframework
 ```
 
 Add to `settings.py`:
+
 ```python
 INSTALLED_APPS = [
     ...,
@@ -35,13 +36,14 @@ INSTALLED_APPS = [
 
 You need **three new files** in your `core/` folder. Use the boilerplate from this repo as your starting point.
 
-| New File | Purpose |
-|---|---|
-| `core/serializers.py` | Converts models to JSON and validates input |
-| `core/api_views.py` | Handles API requests using DRF generic views |
-| `core/api_urls.py` | Maps URL patterns to API views |
+| New File              | Purpose                                      |
+| --------------------- | -------------------------------------------- |
+| `core/serializers.py` | Converts models to JSON and validates input  |
+| `core/api_views.py`   | Handles API requests using DRF generic views |
+| `core/api_urls.py`    | Maps URL patterns to API views               |
 
 Then add this line to `studentplatform/urls.py`:
+
 ```python
 path('api/', include('core.api_urls')),
 ```
@@ -51,17 +53,22 @@ path('api/', include('core.api_urls')),
 ## Requirements
 
 ### Serializers
+
 - Create a `StudentSerializer` using `ModelSerializer`
 - Create a `CourseSerializer` using `ModelSerializer`
 - Use `fields = '__all__'` to include all model fields
 
 ### API Views
+
 For each model you need two views using DRF generics:
+
 - `ListCreateAPIView` — handles GET (list) and POST (create)
 - `RetrieveUpdateDestroyAPIView` — handles GET (one), PUT, PATCH, DELETE
 
 ### API URLs
+
 Wire up your views with `path()`:
+
 - `/api/students/` → list + create
 - `/api/students/<int:pk>/` → retrieve + update + delete
 - `/api/courses/` → list + create
@@ -70,7 +77,9 @@ Wire up your views with `path()`:
 Remember: DRF uses `pk` (primary key) in URL patterns, not `student_id`.
 
 ### Testing
+
 Once everything is wired up:
+
 1. Visit http://127.0.0.1:8000/api/students/ in your browser — you should see the browsable API
 2. Try creating a student through the browsable API form
 3. Try curl from the terminal:
@@ -87,8 +96,8 @@ Once everything is wired up:
 
 ## Bonus Challenges
 
-- [ ] **Nested endpoint** — add `/api/courses/<pk>/students/` using `ListAPIView` with a filtered queryset
-- [ ] **Filtering** — filter students by grade or active status via query parameters
+- [x] **Nested endpoint** — add `/api/courses/<pk>/students/` using `ListAPIView` with a filtered queryset
+- [x] **Filtering** — filter students by grade or active status via query parameters
 - [ ] **Search** — search students by name or email
 - [ ] **Pagination** — configure DRF to paginate list responses
 
