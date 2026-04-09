@@ -1,42 +1,67 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Student List{% endblock %} {% block content %}
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold tracking-tight">Students</h1>
+    <a
+      href="{% url 'add_student' %}"
+      class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-4 py-2 bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+    >
+      Add Student
+    </a>
+  </div>
 
-{% block title %}Student List{% endblock %}
-
-{% block content %}
-
-<h1>Student List</h1>
-
-<a href={% url 'add_student' %}>Add Student</a>
-
-{% if count == 0 %}
-<p>No students yet</p>
-{% else %}
-<table style='margin-top: 8px;'>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Date of Birth</th>
-    <th>Grade</th>
-    <th>Active</th>
-    <th>Course</th>
-  </tr>
-  {% for student in students %}
-  <tr>
-    <td>{{student.id}}</td>
-    <td>
-        <a href={% url 'student_detail' student.id %}>{{student.name}}</a>
-    </td>
-    <td>{{student.email}}</td>
-    <td>{{student.date_of_birth}}</td>
-    <td>{{student.grade}}</td>
-    <td>{{student.is_active}}</td>
-    <td>
-      <a href={% url 'course_detail' student.course.id %}>{{student.course.name}}</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %} {% endblock %}
-
-
+  {% if count == 0 %}
+  <div class="flex items-center justify-center rounded-md border border-dashed p-12">
+    <p class="text-sm text-muted-foreground">No students yet</p>
+  </div>
+  {% else %}
+  <c-table>
+    <c-table.header>
+      <c-table.row>
+        <c-table.head class="w-15">Id</c-table.head>
+        <c-table.head>Name</c-table.head>
+        <c-table.head>Email</c-table.head>
+        <c-table.head>Date of Birth</c-table.head>
+        <c-table.head>Grade</c-table.head>
+        <c-table.head>Status</c-table.head>
+        <c-table.head>Course</c-table.head>
+      </c-table.row>
+    </c-table.header>
+    <c-table.body>
+      {% for student in students %}
+      <c-table.row>
+        <c-table.cell class="font-medium">{{ student.id }}</c-table.cell>
+        <c-table.cell>
+          <a
+            href="{% url 'student_detail' student.id %}"
+            class="text-sm font-medium underline underline-offset-4 hover:text-primary"
+          >
+            {{ student.name }}
+          </a>
+        </c-table.cell>
+        <c-table.cell>{{ student.email }}</c-table.cell>
+        <c-table.cell>{{ student.date_of_birth }}</c-table.cell>
+        <c-table.cell>{{ student.grade }}</c-table.cell>
+        <c-table.cell>
+          {% if student.is_active %}
+          <c-badge>Active</c-badge>
+          {% else %}
+          <c-badge variant="secondary">Inactive</c-badge>
+          {% endif %}
+        </c-table.cell>
+        <c-table.cell>
+          <a
+            href="{% url 'course_detail' student.course.id %}"
+            class="text-sm hover:underline underline-offset-4"
+          >
+            {{ student.course.name }}
+          </a>
+        </c-table.cell>
+      </c-table.row>
+      {% endfor %}
+    </c-table.body>
+    <c-table.caption>{{ count }} student{{ count|pluralize }} total</c-table.caption>
+  </c-table>
+  {% endif %}
+</div>
+{% endblock %}
