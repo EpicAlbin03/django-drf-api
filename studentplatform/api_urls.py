@@ -7,13 +7,14 @@ from .api_views import (
     StudentRetrieveUpdateDestroyAPIView,
 )
 
-urlpatterns = [  # type: ignore
+# pk = primary key
+urlpatterns = [
     path(
         "students/",
         StudentListCreateAPIView.as_view(),
     ),
     path(
-        "students/<int:student_id>/",
+        "students/<int:pk>/",
         StudentRetrieveUpdateDestroyAPIView.as_view(),
     ),
     path(
@@ -21,7 +22,7 @@ urlpatterns = [  # type: ignore
         CourseListCreateAPIView.as_view(),
     ),
     path(
-        "courses/<int:course_id>/",
+        "courses/<int:pk>/",
         CourseRetrieveUpdateDestroyAPIView.as_view(),
     ),
 ]
