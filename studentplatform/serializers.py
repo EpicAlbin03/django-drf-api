@@ -1,5 +1,3 @@
-# pyright: reportIncompatibleVariableOverride=false
-
 from rest_framework import serializers
 
 from .models import Course, Student
@@ -11,7 +9,7 @@ class StudentSerializer(serializers.ModelSerializer[Student]):
         fields = "__all__"
 
 
-class CourseSerializer(serializers.ModelSerializer[Student]):
+class CourseSerializer(serializers.ModelSerializer[Course]):
     class Meta:
         model = Course
         fields = "__all__"
