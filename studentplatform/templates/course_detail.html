@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ course.code }} — {{ course.name }}</h1>
+
+{% if course.description %}
+<p>{{ course.description }}</p>
+{% endif %}
+
+<h2>Enrolled Students ({{ students|length }})</h2>
+
+<a href="{% url 'course_list' %}">← Back to courses</a>
+
+{% if students.count == 0 %}
+<p>No students enrolled yet</p>
+{% else %}
+<table style='margin-top: 8px;'>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Grade</th>
+  </tr>
+  {% for student in students %}
+  <tr>
+    <td>{{student.id}}</td>
+    <td>
+        <a href={% url 'student_detail' student.id %}>{{student.name}}</a>
+    </td>
+    <td>{{student.email}}</td>
+    <td>{{student.grade}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

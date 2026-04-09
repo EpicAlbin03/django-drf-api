@@ -1,0 +1,27 @@
+/*
+    Session 3 — Student Platform CSS
+
+    TODO: Style your pages. Here are some suggestions:
+    - Body: font-family, margin, padding
+    - Nav: background color, links, spacing
+    - Table: borders, padding, header styling, hover effects
+    - Form: input sizing, spacing, button styling
+    - Links: colors, hover effects
+*/
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit {{ student.name }}{% endblock %}
+
+{% block content %}
+
+<h1>Edit {{ student.name }}</h1>
+
+
+<form action="" method="post" style='width: fit-content;'>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div style='display: flex; justify-content: space-between;'>
+        <a href={% url 'student_detail' student.id %}>Cancel</a>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+{% endblock %}

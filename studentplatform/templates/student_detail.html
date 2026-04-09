@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Detail{% endblock %}
+
+{% block content %}
+
+<h1>Student Detail</h1>
+
+<a href={% url 'student_list' %}>Back to list</a>
+
+<table style='margin-top: 8px;'>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Date of Birth</th>
+    <th>Grade</th>
+    <th>Active</th>
+    <th>Course</th>
+    <th>Actions</th>
+  </tr>
+  <tr>
+    <td>{{student.id}}</td>
+    <td>
+        <a href={% url 'student_detail' student.id %}>{{student.name}}</a>
+    </td>
+    <td>{{student.email}}</td>
+    <td>{{student.date_of_birth}}</td>
+    <td>{{student.grade}}</td>
+    <td>{{student.is_active}}</td>
+    <td>
+      <a href={% url 'course_detail' student.course.id %}>{{student.course.name}}</a>
+    </td>
+    <td style='display: flex; gap: 8px;'>
+      <a href={% url 'edit_student' student.id %}>Edit</a>
+      <form method="post" action={% url 'delete_student' student.id %}>
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+</table>
+{% endblock %}

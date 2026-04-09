@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+
+<h1>Courses</h1>
+
+{% if count == 0 %}
+<p>No courses yet</p>
+{% else %}
+<table style='margin-top: 8px;'>
+  <tr>
+    <th>Id</th>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Students</th>
+  </tr>
+  {% for course in courses %}
+  <tr>
+    <td>{{course.id}}</td>
+    <td>{{course.code}}</td>
+    <td>
+        <a href={% url 'course_detail' course.id %}>{{course.name}}</a>
+    </td>
+    <td>{{course.students.count}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
