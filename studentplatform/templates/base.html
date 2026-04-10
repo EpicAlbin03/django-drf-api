@@ -35,9 +35,9 @@
           </c-navigation-menu.list>
         </c-navigation-menu>
         <div class="ml-auto">
-          <c-badge variant="secondary"
-            >{{ students_count }} Student{% if students_count != 1 %}s{% endif %}</c-badge
-          >
+          <c-badge variant="secondary">
+            {{ students_count }} Student{{ students_count|pluralize }}
+          </c-badge>
         </div>
       </div>
     </header>
