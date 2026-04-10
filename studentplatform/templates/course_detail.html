@@ -8,8 +8,8 @@
       ← Back to courses
     </a>
     <h1 class="text-3xl font-bold tracking-tight">
-      <c-badge variant="outline" class="mr-2 align-middle text-base">{{ course.code }}</c-badge>
       {{ course.name }}
+      <c-badge variant="outline" class="ml-2 align-middle text-base">{{ course.code }}</c-badge>
     </h1>
     {% if course.description %}
     <p class="text-muted-foreground">{{ course.description }}</p>
