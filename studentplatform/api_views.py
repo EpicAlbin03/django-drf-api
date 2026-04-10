@@ -8,6 +8,7 @@ from .models import Course, Student
 
 # GET, POST /students/
 class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
+    # queryset = Student.objects.select_related('course').all()
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
