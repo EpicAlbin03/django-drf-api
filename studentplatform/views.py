@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -17,8 +18,23 @@ def about(request: HttpRequest):
 
 def student_list(request: HttpRequest):
     """List all students in a table."""
-    students = Student.objects.all()
-    return render(request, 'student_list.html', {'students': students, 'count': len(students)})
+    search_query = request.GET.get('q', '').strip()
+    student_queryset = Student.objects.select_related('course')
+
+    if search_query:
+        students = student_queryset.filter(Q(name__icontains=search_query) | Q(email__icontains=search_query))
+    else:
+        students = student_queryset.all()
+
+    return render(
+        request,
+        'student_list.html',
+        {
+            'students': students,
+            'count': students.count(),
+            'search_query': search_query,
+        },
+    )
 
 
 def student_detail(request: HttpRequest, student_id: int):

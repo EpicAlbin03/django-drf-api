@@ -1,20 +1,5 @@
-{% extends 'base.html' %} {% block title %}Student List{% endblock %} {% block content %} {% comment
-%} https://alpinejs.dev/directives/data {% endcomment %}
-<div
-  class="space-y-6"
-  x-data="{
-    query: '',
-    matchesStudent(rowText) {
-      const normalizedQuery = this.query.trim().toLowerCase()
-
-      if (!normalizedQuery) {
-        return true
-      }
-
-      return rowText.toLowerCase().includes(normalizedQuery)
-    }
-  }"
->
+{% extends 'base.html' %} {% block title %}Student List{% endblock %} {% block content %}
+<div class="space-y-6">
   <div class="flex items-center justify-between">
     <h1 class="text-3xl font-bold tracking-tight">Students</h1>
     <a
@@ -25,22 +10,36 @@
     </a>
   </div>
 
-  {% if count == 0 %}
-  <div class="flex items-center justify-center rounded-md border border-dashed p-12">
-    <p class="text-sm text-muted-foreground">No students yet</p>
-  </div>
-  {% else %}
-  <div class="space-y-2">
+  <form method="get" class="flex flex-col gap-2 sm:flex-row sm:items-center">
     <c-input
       id="student-table-search"
       type="search"
-      x-model="query"
-      placeholder="Search..."
+      name="q"
+      value="{{ search_query }}"
+      placeholder="Search by name or email"
       class="max-w-sm"
-      aria-label="Search students table"
+      aria-label="Search by name or email"
     />
-  </div>
+    <div class="flex items-center gap-2">
+      <c-button type="submit">Search</c-button>
+      {% if search_query %}
+      <a
+        href="{% url 'student_list' %}"
+        class="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground"
+      >
+        Clear
+      </a>
+      {% endif %}
+    </div>
+  </form>
 
+  {% if count == 0 %}
+  <div class="flex items-center justify-center rounded-md border border-dashed p-12">
+    <p class="text-sm text-muted-foreground">
+      {% if search_query %}No students match your search{% else %}No students yet{% endif %}
+    </p>
+  </div>
+  {% else %}
   <c-table>
     <c-table.header>
       <c-table.row>
@@ -55,10 +54,7 @@
     </c-table.header>
     <c-table.body>
       {% for student in students %}
-      <c-table.row
-        x-show="matchesStudent($el.dataset.searchValue)"
-        data-search-value="{{ student.id }} {{ student.name }} {{ student.email }} {{ student.date_of_birth }} {{ student.grade }} {% if student.is_active %}Active{% else %}Inactive{% endif %} {{ student.course.name }}"
-      >
+      <c-table.row>
         <c-table.cell class="font-medium">{{ student.id }}</c-table.cell>
         <c-table.cell>
           <a
@@ -71,13 +67,15 @@
         <c-table.cell>{{ student.email }}</c-table.cell>
         <c-table.cell>{{ student.date_of_birth }}</c-table.cell>
         <c-table.cell>{{ student.grade }}</c-table.cell>
+        {% if student.is_active %}
         <c-table.cell>
-          {% if student.is_active %}
           <c-badge>Active</c-badge>
-          {% else %}
-          <c-badge variant="secondary">Inactive</c-badge>
-          {% endif %}
         </c-table.cell>
+        {% else %}
+        <c-table.cell>
+          <c-badge variant="secondary">Inactive</c-badge>
+        </c-table.cell>
+        {% endif %}
         <c-table.cell>
           <a
             href="{% url 'course_detail' student.course.id %}"
@@ -89,7 +87,13 @@
       </c-table.row>
       {% endfor %}
     </c-table.body>
+    {% if search_query %}
+    <c-table.caption>
+      {{ count }} student{{ count|pluralize }} total for "{{ search_query }}"
+    </c-table.caption>
+    {% else %}
     <c-table.caption>{{ count }} student{{ count|pluralize }} total</c-table.caption>
+    {% endif %}
   </c-table>
   {% endif %}
 </div>
