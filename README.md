@@ -105,7 +105,7 @@ Once everything is wired up:
 
 ## When You're Done
 
-**Note:** See dependencies in `pyproject.toml`
+**Note:** See dependencies in `pyproject.toml`.
 
 ```bash
 pip freeze > requirements.txt

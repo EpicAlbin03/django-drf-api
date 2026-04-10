@@ -123,6 +123,7 @@
 }
 
 @layer components {
+  /* Styles for generated form fields */
   .form-fields input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
   .form-fields select,
   .form-fields textarea {
