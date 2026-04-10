@@ -19,19 +19,31 @@
             <c-navigation-menu.item>
               <c-navigation-menu.link href="{% url 'home' %}">Home</c-navigation-menu.link>
             </c-navigation-menu.item>
+            {% if user.is_authenticated %}
             <c-navigation-menu.item>
-              <c-navigation-menu.link href="{% url 'student_list' %}"
-                >Students</c-navigation-menu.link
-              >
+              <c-navigation-menu.link href="{% url 'student_list' %}">
+                Students
+              </c-navigation-menu.link>
             </c-navigation-menu.item>
             <c-navigation-menu.item>
-              <c-navigation-menu.link href="{% url 'course_list' %}"
-                >Courses</c-navigation-menu.link
-              >
+              <c-navigation-menu.link href="{% url 'course_list' %}">
+                Courses
+              </c-navigation-menu.link>
             </c-navigation-menu.item>
             <c-navigation-menu.item>
               <c-navigation-menu.link href="/admin">Admin</c-navigation-menu.link>
             </c-navigation-menu.item>
+            <c-navigation-menu.item>
+              <c-navigation-menu.link href="{% url 'logout' %}">Logout</c-navigation-menu.link>
+            </c-navigation-menu.item>
+            {% else %}
+            <c-navigation-menu.item>
+              <c-navigation-menu.link href="{% url 'about' %}">About</c-navigation-menu.link>
+            </c-navigation-menu.item>
+            <c-navigation-menu.item>
+              <c-navigation-menu.link href="{% url 'login' %}">Login</c-navigation-menu.link>
+            </c-navigation-menu.item>
+            {% endif %}
           </c-navigation-menu.list>
         </c-navigation-menu>
         <div class="ml-auto">

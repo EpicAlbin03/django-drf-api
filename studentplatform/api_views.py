@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from studentplatform.serializers import CourseSerializer, StudentSerializer
 
@@ -11,6 +12,7 @@ class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
     # queryset = Student.objects.all() # no relations / fk
     queryset = Student.objects.select_related('course').all()  # more efficient
     serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
 
     # filter students by grade or active status
     def get_queryset(self):
@@ -31,23 +33,27 @@ class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
 class StudentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView[Student]):
     queryset = Student.objects.select_related('course').all()
     serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # GET, POST /courses/
 class CourseListCreateAPIView(generics.ListCreateAPIView[Course]):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # GET, PUT, PATCH, DELETE /courses/<int:pk>/
 class CourseRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView[Course]):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # GET /courses/<int:pk>/students/
 class CourseStudentListAPIView(generics.ListAPIView[Student]):
     serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         course = get_object_or_404(Course, pk=self.kwargs['pk'])

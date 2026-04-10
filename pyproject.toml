@@ -9,6 +9,7 @@ dependencies = [
     "django-cotton>=2.6.2",
     "django-stubs[compatible-mypy]>=6.0.2",
     "djangorestframework>=3.17.1",
+    "djangorestframework-simplejwt>=5.5.1",
     "djangorestframework-stubs[compatible-mypy]>=3.16.9",
     "poethepoet>=0.44.0",
 ]
@@ -100,6 +101,7 @@ ignore = [
   "RUF067",  # wps handles `__init__.py` logic better
   "TRY003",  # long exception messages from `tryceratops`
 #   'COM812'
+  'RUF012'   # permission_classes = [IsAuthenticated]
 ]
 external = ["WPS"]
 
