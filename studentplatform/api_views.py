@@ -8,8 +8,8 @@ from .models import Course, Student
 
 # GET, POST /students/
 class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
-    # queryset = Student.objects.select_related('course').all()
-    queryset = Student.objects.all()
+    # queryset = Student.objects.all() # no relations / fk
+    queryset = Student.objects.select_related('course').all()  # more efficient
     serializer_class = StudentSerializer
 
     # filter students by grade or active status
@@ -29,7 +29,7 @@ class StudentListCreateAPIView(generics.ListCreateAPIView[Student]):
 
 # GET, PUT, PATCH, DELETE /students/<int:pk>/
 class StudentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView[Student]):
-    queryset = Student.objects.all()
+    queryset = Student.objects.select_related('course').all()
     serializer_class = StudentSerializer
 
 
@@ -51,4 +51,4 @@ class CourseStudentListAPIView(generics.ListAPIView[Student]):
 
     def get_queryset(self):
         course = get_object_or_404(Course, pk=self.kwargs['pk'])
-        return course.students.all()
+        return course.students.select_related('course').all()
